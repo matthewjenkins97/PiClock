@@ -69,48 +69,6 @@ echo "Setting sound to max (assuming Monitor Tv controls volume)...."
 # push sound level to maximum
 amixer cset numid=1 -- 400 >/dev/null 2>&1
 
-# NeoPixel AmbiLights
-echo "Checking for NeoPixels Ambilight..."
-cd Leds
-python -c "import NeoPixel" >/dev/null 2>&1
-if [ $? -eq 0 ]
-then
-	pgrep -f NeoAmbi.py
-	if [ $? -eq 1 ]
-	then
-		echo "Starting NeoPixel Ambilight Service..."
-		sudo python NeoAmbi.py &
-	fi
-fi
-cd ..
-
-echo "Checking for GPIO Buttons..."
-# gpio button to keyboard input
-if [ -x Button/gpio-keys ]
-then
-	pgrep -f gpio-keys 
-	if [ $? -eq 1 ]
-	then
-		echo "Starting gpio-keys Service..."
-		sudo Button/gpio-keys 23:KEY_SPACE 24:KEY_F2 25:KEY_UP &
-	fi
-fi
-
-echo "Checking for Temperature Sensors..."
-# for temperature sensor(s) on One Wire bus
-python -c "import w1thermsensor" >/dev/null 2>&1
-if [ $? -eq 0 ]
-	then
-	pgrep -f TempServer.py
-	if [ $? -eq 1 ]
-	then
-		echo "Starting Temperature Service..."
-		cd Temperature
-		python TempServer.py &
-		cd ..
-	fi
-fi
-
 # the main app
 cd Clock
 if [ "$1" = "-s" -o "$1" = "--screen-log" ]

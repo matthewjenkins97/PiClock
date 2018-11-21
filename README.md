@@ -1,4 +1,10 @@
-# PiClock
+# PiClock (Fork by matthewjenkins97)
+
+This is a complete overhaul of the project started by n0bel. I didn't need too many of the features provided, so I decided to go into the project and remove anything that I wasn't finding useful for my needs. I also took the liberty of modifying some of the assets and making the general UI/UX more pleasant to look at.
+
+The original readme can be found below.
+
+## PiClock
 A Fancy Clock built around a monitor and a Raspberry Pi
 
 ![PiClock Picture](https://raw.githubusercontent.com/n0bel/PiClock/master/Pictures/20150307_222711.jpg)
