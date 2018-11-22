@@ -26,7 +26,6 @@ def tick():
             locale.setlocale(locale.LC_TIME, Config.DateLocale)
         except:
             pass
-
     now = datetime.datetime.now()
     if Config.digital:
         timestr = Config.digitalformat.format(now)
@@ -73,7 +72,6 @@ def tick():
                 ts.width(),
                 ts.height()
             )
-
             angle = ((now.hour % 12) + now.minute / 60.0) * 30.0
             ts = hourpixmap.size()
             hourpixmap2 = hourpixmap.transformed(
@@ -91,11 +89,9 @@ def tick():
                 ts.width(),
                 ts.height()
             )
-
     dy = "{0:%I:%M %p}".format(now)
     if dy != pdy:
         pdy = dy
-
     if now.day != lastday:
         lastday = now.day
         # date
@@ -108,7 +104,7 @@ def tick():
             sup = 'rd'
         if Config.DateLocale != "":
             sup = ""
-        ds = "{0:%A %B} {0.day}<sup>{1}</sup> {0.year}".format(now, sup)
+        ds = "{0:%A, %B} {0.day}<sup>{1}</sup> {0.year}".format(now, sup)
         datex.setText(ds)
 
 
@@ -120,6 +116,7 @@ def qtstart():
     ctimer.start(1000)
 
 
+# needed for backwards compatibility
 class Radar(QtGui.QLabel):
     pass
 
@@ -130,9 +127,7 @@ def realquit():
 
 def myquit(a=0, b=0):
     global ctimer
-
     ctimer.stop()
-
     QtCore.QTimer.singleShot(30, realquit)
 
 
@@ -140,10 +135,8 @@ def fixupframe(frame, onoff):
     for child in frame.children():
         if isinstance(child, Radar):
             if onoff:
-                # print "calling wxstart on radar on ",frame.objectName()
                 child.wxstart()
             else:
-                # print "calling wxstop on radar on ",frame.objectName()
                 child.wxstop()
 
 
@@ -160,6 +153,7 @@ def nextframe(plusminus):
     fixupframe(frames[framep], True)
 
 
+# needed for backwards compatibility
 class myMain(QtGui.QWidget):
     pass
 
@@ -240,7 +234,6 @@ except AttributeError:
     Config.LInsideTemp = "Inside Temp "
     Config.LRain = " Rain: "
     Config.LSnow = " Snow: "
-#
 
 
 lastmin = -1
@@ -263,11 +256,6 @@ w = myMain()
 w.setWindowTitle(os.path.basename(__file__))
 
 w.setStyleSheet("QWidget { background-color: black;}")
-
-# fullbgpixmap = QtGui.QPixmap(Config.background)
-# fullbgrect = fullbgpixmap.rect()
-# xscale = float(width)/fullbgpixmap.width()
-# yscale = float(height)/fullbgpixmap.height()
 
 xscale = float(width) / 1440.0
 yscale = float(height) / 900.0
@@ -336,6 +324,7 @@ else:
         "}")
     clockface.setAlignment(Qt.AlignCenter)
     clockface.setGeometry(clockrect)
+
     glow = QtGui.QGraphicsDropShadowEffect()
     glow.setOffset(0)
     glow.setBlurRadius(50)
@@ -352,7 +341,14 @@ datex.setStyleSheet("#datex { font-family:sans-serif; color: " +
                     Config.fontattr +
                     "}")
 datex.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
-datex.setGeometry(0, 0, width, 100)
+datex.setGeometry(0, height / 1.15, width, 100)
+
+glow = QtGui.QGraphicsDropShadowEffect()
+glow.setOffset(0)
+glow.setBlurRadius(50)
+dcolor = QColor(Config.digitalcolor).darker(0).name()
+glow.setColor(QColor(dcolor))
+datex.setGraphicsEffect(glow)
 
 manager = QtNetwork.QNetworkAccessManager()
 

@@ -1,15 +1,16 @@
 background = 'images/clockbackground.png'
-textcolor = '#000000'
+textcolor = '#C8C8C8'
 clockface = 'images/clockface3.png'
 hourhand = 'images/hourhand.png'
 minhand = 'images/minhand.png'
 sechand = 'images/sechand.png'
 
 
-digital = 0             # 1 = Digtal Clock, 0 = Analog Clock
+digital = 0
+# 1 = Digtal Clock, 0 = Analog Clock
 
 # Goes with light blue config (like the default one)
-digitalcolor = "#000000"
+digitalcolor = textcolor
 # The above example shows in this way:
 #  https://github.com/n0bel/PiClock/blob/master/Documentation/Digital%20Clock%20v1.jpg
 # ( specifications of the time string are documented here:
